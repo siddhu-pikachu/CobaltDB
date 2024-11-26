@@ -1,3 +1,4 @@
+// DataType.java
 package dbms;
 
 public enum DataType {
@@ -11,58 +12,29 @@ public enum DataType {
     YEAR(0x08),
     TIME(0x09),
     DATETIME(0x0A),
-    DATE(0x0B),
-    TEXT(0x0C);
+    DATE(0x0B);
+    // the data type text is handled seperately because addint it to the enum will make it a singleton
+    // which means we can only have a single type of text(text of length = some(x)) at any point of time
 
-    private final int code;
-    private Integer length;
+    private final int code; // initializes the unicode of each custom data type and cannot be changed once initialized
 
+    // constructor for the class
     DataType(int code) {
         this.code = code;
-        this.length = null;
     }
 
+    //
     public int getCode() {
-        if (this == TEXT && length != null) {
-            // handles datatypes from 0x0D and so on.
-            return code + length;
-        }
         return code;
     }
 
-    public void setLength(Integer length) {
-        if (this != TEXT) {
-            throw new IllegalStateException("Length can only be set for TEXT type");
-        }
-        if (length < 0 || length > 115) {
-            throw new IllegalArgumentException("Text length must be between 0 and 115");
-        }
-        this.length = length;
-    }
-
-    public Integer getLength() {
-        return length;
-    }
-
-    public static DataType fromCode(int code) {
-        if (code >= 0x0C) {
-            DataType text = TEXT;
-            text.setLength(code-0x0C);
-            return text;
-        }
-
-        for(DataType type : values()) {
-            if (type.getCode() == code) { return type;}
-        }
-        throw new IllegalArgumentException("Invalid type code " + code);
-    }
-
-    public static DataType createText(int length) {
-        if (length < 0 || length > 115) {
-            throw new IllegalArgumentException("Text length must be between 0 and 115");
-        }
-        DataType text = TEXT;
-        text.setLength(length);
-        return text;
+    public int getLength() {
+        return switch (this) {
+            case TINYINT, YEAR -> 1;
+            case SMALLINT -> 2;
+            case INT, FLOAT, TIME -> 4;
+            case BIGINT, DOUBLE, DATETIME, DATE -> 8;
+            case NULL -> 0;
+        };
     }
 }
