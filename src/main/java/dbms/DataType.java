@@ -5,7 +5,7 @@ public enum DataType {
     TINYINT(0x01),
     SMALLINT(0x02),
     INT(0x03),
-    BITGINT(0x04),
+    BIGINT(0x04),
     FLOAT(0x05),
     DOUBLE(0x06),
     YEAR(0x08),
@@ -42,5 +42,27 @@ public enum DataType {
 
     public Integer getLength() {
         return length;
+    }
+
+    public static DataType fromCode(int code) {
+        if (code >= 0x0C) {
+            DataType text = TEXT;
+            text.setLength(code-0x0C);
+            return text;
+        }
+
+        for(DataType type : values()) {
+            if (type.getCode() == code) { return type;}
+        }
+        throw new IllegalArgumentException("Invalid type code " + code);
+    }
+
+    public static DataType createText(int length) {
+        if (length < 0 || length > 115) {
+            throw new IllegalArgumentException("Text length must be between 0 and 115");
+        }
+        DataType text = TEXT;
+        text.setLength(length);
+        return text;
     }
 }
