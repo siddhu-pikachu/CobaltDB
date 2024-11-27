@@ -23,11 +23,12 @@ public enum DataType {
         this.code = code;
     }
 
-    //
+    // method to get code of a data type object
     public int getCode() {
         return code;
     }
 
+    //method to get the byte length of the custom datatype
     public int getLength() {
         return switch (this) {
             case TINYINT, YEAR -> 1;
