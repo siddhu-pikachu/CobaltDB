@@ -1,41 +1,122 @@
-// DataType.java
 package dbms;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum DataType {
-    NULL(0x00),
-    TINYINT(0x01),
-    SMALLINT(0x02),
-    INT(0x03),
-    BIGINT(0x04),
-    FLOAT(0x05),
-    DOUBLE(0x06),
-    YEAR(0x08),
-    TIME(0x09),
-    DATETIME(0x0A),
-    DATE(0x0B);
-    // the data type text is handled seperately because addint it to the enum will make it a singleton
-    // which means we can only have a single type of text(text of length = some(x)) at any point of time
+     NULL((byte)0){ 
+          @Override
+          public String toString(){ return "NULL"; }},
+     TINYINT((byte)1){ 
+      @Override
+      public String toString(){ return "TINYINT"; }},
+     SMALLINT((byte)2){ 
+      @Override
+      public String toString(){ return "SMALLINT"; }},
+     INT((byte)3){ 
+      @Override
+      public String toString(){ return "INT"; }},
+     BIGINT((byte)4){ 
+      @Override
+      public String toString(){ return "BIGINT"; }},
+     FLOAT((byte)5){ 
+      @Override
+      public String toString(){ return "FLOAT"; }},
+     DOUBLE((byte)6){ 
+      @Override
+      public String toString(){ return "DOUBLE"; }},
+     YEAR((byte)8){ 
+      @Override
+      public String toString(){ return "YEAR"; }},
+     TIME((byte)9){ 
+      @Override
+      public String toString(){ return "TIME"; }},
+     DATETIME((byte)10){ 
+      @Override
+      public String toString(){ return "DATETIME"; }},
+     DATE((byte)11){ 
+      @Override
+      public String toString(){ return "DATE"; }},
+     TEXT((byte)12){ 
+      @Override
+      public String toString(){ return "TEXT"; }};
+     
+    
+     
+ private static final Map<Byte,DataType> data_type_lookup = new HashMap<Byte,DataType>();
+ private static final Map<Byte,Integer> data_type_size_lookup = new HashMap<Byte,Integer>();
+ private static final Map<String,DataType> data_type_string_lookup = new HashMap<String,DataType>();
+ private static final Map<DataType,Integer> data_type_print_offset = new HashMap<DataType,Integer>();
 
-    private final int code; // initializes the unicode of each custom data type and cannot be changed once initialized
 
-    // constructor for the class
-    DataType(int code) {
-        this.code = code;
-    }
 
-    // method to get code of a data type object
-    public int getCode() {
-        return code;
-    }
+ static {
+      for(DataType s : DataType.values())
+          {
+               data_type_lookup.put(s.getValue(), s);
+               data_type_string_lookup.put(s.toString(), s);
+              
+               if(s == DataType.TINYINT || s== DataType.YEAR)
+                   {
+                    data_type_size_lookup.put(s.getValue(), 1);
+                    data_type_print_offset.put(s, 6);
+                   }
+               else if(s == DataType.SMALLINT){
+                    data_type_size_lookup.put(s.getValue(), 2);
+                    data_type_print_offset.put(s, 8);
+               }
+               else if(s == DataType.INT || s == DataType.FLOAT || s == DataType.TIME){
+                    data_type_size_lookup.put(s.getValue(), 4);
+                    data_type_print_offset.put(s, 10);
+               }
+               else if(s == DataType.BIGINT || s == DataType.DOUBLE
+                          || s == DataType.DATETIME || s == DataType.DATE ){
+                              data_type_size_lookup.put(s.getValue(), 8);
+                              data_type_print_offset.put(s, 25);
+                          }
+               else if(s == DataType.TEXT){
+                    data_type_print_offset.put(s, 25);
+               }
+               else if(s == DataType.NULL){
+                    data_type_size_lookup.put(s.getValue(), 0);
+                    data_type_print_offset.put(s, 6);
+               }
+          }
 
-    //method to get the byte length of the custom datatype
-    public int getLength() {
-        return switch (this) {
-            case TINYINT, YEAR -> 1;
-            case SMALLINT -> 2;
-            case INT, FLOAT, TIME -> 4;
-            case BIGINT, DOUBLE, DATETIME, DATE -> 8;
-            case NULL -> 0;
-        };
-    }
+
+ }
+ private byte value;
+
+ private DataType(byte value) {
+      this.value = value;
+ }
+
+ 
+
+ public byte getValue() { return value; }
+
+ public static DataType get(byte value) { 
+     if(value > 12)
+        return DataType.TEXT;
+      return data_type_lookup.get(value); 
+ }
+
+ public static DataType get(String text) { 
+      return data_type_string_lookup.get(text); 
+ }
+
+ public static int getLength(DataType type){
+     return getLength(type.getValue());
+}
+ public static int getLength(byte value){
+     if(get(value)!=DataType.TEXT)
+          return data_type_size_lookup.get(value);
+     else
+          return value - 12;
+ }
+
+ public int getPrintOffset(){
+      return data_type_print_offset.get(get(this.value));
+ }
+ 
 }

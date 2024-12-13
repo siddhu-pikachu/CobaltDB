@@ -1,234 +1,144 @@
 package dbms;
-
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.io.RandomAccessFile;
+import java.io.File;
+import java.io.IOException;
 
 public class BPlusTree {
-    private Node root;
-    private boolean isInitialized;
-    private int nextPageNumber;
-    private final RandomAccessFile file;
-    private final int order;
 
-    public BPlusTree(RandomAccessFile file) {
-        this(file, 4);  // Default order of 4
+    RandomAccessFile binFile;
+    int root_page_number;
+    String TableName;
+
+    public BPlusTree(RandomAccessFile file, int root_page_number, String TableName) {
+        this.binFile = file;
+        this.root_page_number = root_page_number;
+        this.TableName = TableName;
     }
 
-    public BPlusTree(RandomAccessFile file, int order) {
-        this.file = file;
-        this.order = order;
-        this.isInitialized = false;
-        this.nextPageNumber = 0;
-    }
+    private int binarySearch(List<InternalTableRecord> values, int searchValue, int start, int end) {
 
-    private void initialize() throws IOException {
-        if (!isInitialized) {
-            System.out.println("Initializing B+ Tree");
-            root = new LeafNode(assignPageNumber(), file);
-            isInitialized = true;
-            System.out.println("B+ Tree initialized with root page: " + root.getPageNumber());
+        if(end - start <= 2)
+        {
+            int i =start;
+            for(i=start;i <end;i++){
+                if(values.get(i).row_id < searchValue)
+                    continue;
+                else
+                    break;
+            }
+            return i;
         }
-    }
+        else{
+            
+                int mid = (end - start) / 2 + start;
+                if (values.get(mid).row_id == searchValue)
+                    return mid;
 
-    private LeafNode findTargetPage(int rowId) {
-        Node currentNode = root;
-        while (!currentNode.isLeaf()) {
-            InternalNode internal = (InternalNode) currentNode;
-            int position = binarySearch(internal.getKeys(), rowId, internal.getNumKeys());
-            int childIndex = position < internal.getNumKeys() ? position : internal.getNumKeys();
-            currentNode = internal.getChildren()[childIndex];
+                if (values.get(mid).row_id < searchValue)
+                    return binarySearch(values, searchValue, mid + 1, end);
+                else
+                    return binarySearch(values, searchValue, start, mid - 1);
+            
         }
-        return (LeafNode) currentNode;
+
     }
 
-    public boolean insert(Record record) throws IOException {
-        System.out.println("Attempting to insert record with rowId: " + record.getRowId());
-        initialize();
+    // This method does a traversal on the B+ tree and returns the leaf pages in order
+    public List<Integer> GetAllLeaves() throws IOException {
 
-        LeafNode targetPage = findTargetPage(record.getRowId());
-        System.out.println("Found target page: " + targetPage.getPageNumber());
-
-        byte[] recordData = record.serialize();
-        System.out.println("Record serialized, size: " + recordData.length);
-
-        if (targetPage.getPage().hasSpace(recordData.length)) {
-            boolean success = targetPage.getPage().addRecord(record);
-            System.out.println("Insert " + (success ? "successful" : "failed"));
-            return success;
+        List<Integer> leaf_pages = new ArrayList<>();
+        binFile.seek(root_page_number * AppFileHandler.page_size);
+        // if root is leaf page read directly return one one, no traversal required
+        PageType root_page_type = PageType.get(binFile.readByte());
+        if (root_page_type == PageType.LEAF) {
+            if (!leaf_pages.contains(root_page_number))
+                leaf_pages.add(root_page_number);
         } else {
-            System.out.println("Page full, need to split");
-            splitLeafNode(targetPage, record);
-            return true;
+            addition_ofLeaves(root_page_number, leaf_pages);
         }
+
+        return leaf_pages;
+
     }
 
-    private void splitLeafNode(LeafNode leaf, Record newRecord) throws IOException {
-        // Create new leaf node
-        LeafNode newLeaf = new LeafNode(assignPageNumber(), file);
-
-        // Get all records including new one
-        Record[] currentRecords = leaf.getPage().getAllRecords();
-        Record[] allRecords = new Record[currentRecords.length + 1];
-        System.arraycopy(currentRecords, 0, allRecords, 0, currentRecords.length);
-        allRecords[currentRecords.length] = newRecord;
-
-        // Sort records by rowId
-        java.util.Arrays.sort(allRecords, (r1, r2) -> Integer.compare(r1.getRowId(), r2.getRowId()));
-        int splitPoint = allRecords.length / 2;
-
-        // Clear old leaf and redistribute records
-        leaf.getPage().clear();
-        for (int i = 0; i < splitPoint; i++) {
-            leaf.getPage().addRecord(allRecords[i]);
-        }
-        for (int i = splitPoint; i < allRecords.length; i++) {
-            newLeaf.getPage().addRecord(allRecords[i]);
+    private void addition_ofLeaves(int interiorPageNum, List<Integer> leaf_pages) throws IOException {
+        Page interior_page = new Page(binFile, interiorPageNum);
+        for (InternalTableRecord leftPage : interior_page.LeftChild) {
+            if (Page.GetPageType(binFile, leftPage.LeftChildPgnum) == PageType.LEAF) {
+                if (!leaf_pages.contains(leftPage.LeftChildPgnum))
+                    leaf_pages.add(leftPage.LeftChildPgnum);
+            } else {
+                addition_ofLeaves(leftPage.LeftChildPgnum, leaf_pages);
+            }
         }
 
-        // Update leaf chain pointers
-        Integer rightSibling = leaf.getPage().getRightSibling();
-        newLeaf.getPage().setRightSibling(rightSibling != null ? rightSibling : -1);
-        leaf.getPage().setRightSibling(newLeaf.getPageNumber());
-
-        // Insert split key into parent
-        int splitKey = allRecords[splitPoint].getRowId();
-        insertIntoParent(leaf, splitKey, newLeaf);
-    }
-
-    private void insertIntoParent(Node leftNode, int key, Node rightNode) throws IOException {
-        if (root == leftNode) {
-            InternalNode newRoot = new InternalNode(assignPageNumber(), file);
-            newRoot.getKeys()[0] = key;
-            newRoot.getChildren()[0] = leftNode;
-            newRoot.getChildren()[1] = rightNode;
-            newRoot.setNumKeys(1);
-            root = newRoot;
-            System.out.println("Created new root " + newRoot.getPageNumber());
+        if (Page.GetPageType(binFile, interior_page.RightPage) == PageType.LEAF) {
+            if (!leaf_pages.contains(interior_page.RightPage))
+                leaf_pages.add(interior_page.RightPage);
         } else {
-            Node parent = findParent(leftNode);
-            System.out.println("Found parent " + parent.getPageNumber() + " for node " + leftNode.getPageNumber());
+            addition_ofLeaves(interior_page.RightPage, leaf_pages);
+        }
 
-            InternalNode parentNode = (InternalNode) parent;
-            if (parentNode.getNumKeys() < order - 1) {
-                insertIntoInternal(parentNode, key, rightNode);
-            } else {
-                splitInternalNode(parentNode, key, rightNode);
+    }
+
+    public List<Integer> GetAllLeaves(Condition condition) throws IOException {
+
+        if (condition == null || condition.getOperation() == OperandType.NOTEQUAL
+                || !(new File(App.getNDXFilePath(TableName, condition.column_name)).exists())) {
+            return GetAllLeaves();
+        } else {
+
+            RandomAccessFile index_file = new RandomAccessFile(
+                    App.getNDXFilePath(TableName, condition.column_name), "r");
+            BTree bTree = new BTree(index_file);
+            List<Integer> row_ids = bTree.get_row_ids(condition);
+            Set<Integer> hash_Set = new HashSet<>();
+           
+            for (int row_id : row_ids) {
+                hash_Set.add(get_page_num(row_id, new Page(binFile, root_page_number)));
             }
-        }
-    }
-
-    private void insertIntoInternal(InternalNode node, int key, Node rightChild) {
-        int pos = 0;
-        while (pos < node.getNumKeys() && node.getKeys()[pos] < key) {
-            pos++;
-        }
-
-        // Shift existing keys and children
-        for (int i = node.getNumKeys() - 1; i >= pos; i--) {
-            node.getKeys()[i + 1] = node.getKeys()[i];
-            node.getChildren()[i + 2] = node.getChildren()[i + 1];
-        }
-
-        node.getKeys()[pos] = key;
-        node.getChildren()[pos + 1] = rightChild;
-        node.setNumKeys(node.getNumKeys() + 1);
-    }
-
-    private void splitInternalNode(InternalNode node, int newKey, Node newChild) throws IOException {
-        int[] tempKeys = new int[order];
-        Node[] tempChildren = new Node[order + 1];
-
-        // Find position for new key
-        int pos = 0;
-        while (pos < node.getNumKeys() && node.getKeys()[pos] < newKey) {
-            pos++;
-        }
-
-        // Copy to temp arrays
-        System.arraycopy(node.getKeys(), 0, tempKeys, 0, pos);
-        System.arraycopy(node.getChildren(), 0, tempChildren, 0, pos);
-        tempKeys[pos] = newKey;
-        tempChildren[pos] = node.getChildren()[pos];
-        tempChildren[pos + 1] = newChild;
-        System.arraycopy(node.getKeys(), pos, tempKeys, pos + 1, node.getNumKeys() - pos);
-        System.arraycopy(node.getChildren(), pos + 1, tempChildren, pos + 2, node.getNumKeys() - pos);
-
-        // Create new internal node
-        InternalNode newNode = new InternalNode(assignPageNumber(), file);
-
-        // Find middle key that will be promoted
-        int mid = (order - 1) / 2;
-        int promoteKey = tempKeys[mid];
-
-        // Copy first half to original node
-        node.setNumKeys(mid);
-        System.arraycopy(tempKeys, 0, node.getKeys(), 0, mid);
-        System.arraycopy(tempChildren, 0, node.getChildren(), 0, mid + 1);
-
-        // Copy second half to new node
-        newNode.setNumKeys(order - 1 - mid - 1);
-        System.arraycopy(tempKeys, mid + 1, newNode.getKeys(), 0, newNode.getNumKeys());
-        System.arraycopy(tempChildren, mid + 1, newNode.getChildren(), 0, newNode.getNumKeys() + 1);
-
-        // Promote middle key to parent
-        insertIntoParent(node, promoteKey, newNode);
-    }
-
-    private Node findParent(Node node) throws IOException {
-        if (node == root) {
-            throw new IOException("Cannot find parent of root");
-        }
-
-        Node current = root;
-        System.out.println("Finding parent for node " + node.getPageNumber() + ", starting at root " + root.getPageNumber());
-
-        while (!current.isLeaf()) {
-            InternalNode internal = (InternalNode) current;
-
-            // Check if any child is our target node
-            for (int i = 0; i <= internal.getNumKeys(); i++) {
-                if (internal.getChildren()[i] == node) {
-                    System.out.println("Found parent " + current.getPageNumber() + " for node " + node.getPageNumber());
-                    return current;
-                }
+            System.out.print(" number of rows : " + row_ids.size() + " ---> ");
+            for (int rowId : row_ids) {
+                System.out.print(" " + rowId + " ");
             }
 
-            // If not found, traverse down using first key comparison
-            int firstKey;
-            if (node.isLeaf()) {
-                LeafNode leaf = (LeafNode) node;
-                Record[] records = leaf.getPage().getAllRecords();
-                firstKey = records.length > 0 ? records[0].getRowId() : 0;
-            } else {
-                InternalNode internalNode = (InternalNode) node;
-                firstKey = internalNode.getNumKeys() > 0 ? internalNode.getKeys()[0] : 0;
-            }
-
-            // Find appropriate child
-            int i = 0;
-            while (i < internal.getNumKeys() && internal.getKeys()[i] <= firstKey) {
-                i++;
-            }
-            current = internal.getChildren()[i];
+            System.out.println();
+            System.out.println(" leaves: " + hash_Set);
+            System.out.println();
+            index_file.close();
+            return Arrays.asList(hash_Set.toArray(new Integer[hash_Set.size()]));
         }
 
-        throw new IOException("Parent not found for node " + node.getPageNumber());
     }
 
-    private int binarySearch(int[] keys, int rowId, int numKeys) {
-        int left = 0;
-        int right = numKeys - 1;
+    public int get_page_num(int rowId, Page page) {
+        if (page.pg_type == PageType.LEAF)
+            return page.pgnum;
 
-        while (left <= right) {
-            int mid = (left + right) / 2;
-            if (keys[mid] == rowId) return mid;
-            if (keys[mid] < rowId) right = mid - 1;
-            else left = mid + 1;
+        int index = binarySearch(page.LeftChild, rowId, 0, page.CellCnt - 1);
+
+        if (rowId < page.LeftChild.get(index).row_id) {
+            return get_page_num(rowId, new Page(binFile, page.LeftChild.get(index).LeftChildPgnum));
+        } else {
+        if( index+1 < page.LeftChild.size())
+            return get_page_num(rowId, new Page(binFile, page.LeftChild.get(index+1).LeftChildPgnum));
+        else
+           return get_page_num(rowId, new Page(binFile, page.RightPage));
         }
-        return left;
     }
 
-    private int assignPageNumber() {
-        return nextPageNumber++;
+    public static int get_pagenum_for_insertion(RandomAccessFile file, int root_page_number) {
+        Page rootPage = new Page(file, root_page_number);
+        if (rootPage.pg_type != PageType.LEAF && rootPage.pg_type != PageType.LEAFINDEX)
+            return get_pagenum_for_insertion(file, rootPage.RightPage);
+        else
+            return root_page_number;
+
     }
+
 }
