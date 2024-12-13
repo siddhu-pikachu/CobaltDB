@@ -3,6 +3,9 @@
 ## Current Implementation Status
 ----
 by - Siddhu Neehal Rapeti
+     Yukta Piyush Shah
+     Sakshi Yawale
+     Gagandeep Singh
 
 #### Query Processing
 - Basic query handling skeleton in `App.java`
