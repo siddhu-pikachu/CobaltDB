@@ -25,13 +25,13 @@ public class MetaDataOfTable{
         IsTableExist = false;
         try {
 
-            RandomAccessFile davisbaseTablesCatalog = new RandomAccessFile(
+            RandomAccessFile cobaltdbTablesCatalog = new RandomAccessFile(
                 App.getTBLFilePath(AppFileHandler.tables_table), "r");
-            int root_page_number = AppFileHandler.GetRootPageNum(davisbaseTablesCatalog);
+            int root_page_number = AppFileHandler.GetRootPageNum(cobaltdbTablesCatalog);
            
-            BPlusTree bplusTree = new BPlusTree(davisbaseTablesCatalog, root_page_number,TableName);
+            BPlusTree bplusTree = new BPlusTree(cobaltdbTablesCatalog, root_page_number,TableName);
             for (Integer pageNo : bplusTree.GetAllLeaves()) {
-               Page page = new Page(davisbaseTablesCatalog, pageNo);
+               Page page = new Page(cobaltdbTablesCatalog, pageNo);
                for (TableRecord record : page.GetPageRecords()) {
                   if (new String(record.getAttributes().get(0).field_value).equals(TableName)) {
                     this.root_page_number = Integer.parseInt(record.getAttributes().get(3).field_value);
@@ -44,7 +44,7 @@ public class MetaDataOfTable{
                 break;
             }
    
-            davisbaseTablesCatalog.close();
+            cobaltdbTablesCatalog.close();
             if(IsTableExist)
             {
                LoadColumnData();
@@ -116,10 +116,10 @@ public void UpdateMetaData()
         table_file.close();
          
         
-        RandomAccessFile davisbaseTablesCatalog = new RandomAccessFile(
+        RandomAccessFile cobaltdbTablesCatalog = new RandomAccessFile(
                      App.getTBLFilePath(AppFileHandler.tables_table), "rw");
       
-        AppFileHandler tablesBinaryFile = new AppFileHandler(davisbaseTablesCatalog);
+        AppFileHandler tablesBinaryFile = new AppFileHandler(cobaltdbTablesCatalog);
 
         MetaDataOfTable tablesMetaData = new MetaDataOfTable(AppFileHandler.tables_table);
         
@@ -132,15 +132,15 @@ public void UpdateMetaData()
         List<String> columns = Arrays.asList("record_count","root_page");
         List<String> newValues = new ArrayList<>();
 
-        newValues.add(new Integer(record_count).toString());
-        newValues.add(new Integer(root_page_number).toString());
+        newValues.add(String.valueOf(record_count));
+        newValues.add(String.valueOf(root_page_number));
 
         tablesBinaryFile.update_records_operation(tablesMetaData,condition,columns,newValues);
                                              
-      davisbaseTablesCatalog.close();
+      cobaltdbTablesCatalog.close();
   }
   catch(IOException e){
-     System.out.println("! Error updating meta data for " + TableName);
+     System.out.println("! Error updating metadata for " + TableName);
   }
 
   
@@ -158,18 +158,18 @@ public void UpdateMetaData()
     private void LoadColumnData() {
         try {
   
-           RandomAccessFile davisbaseColumnsCatalog = new RandomAccessFile(
+           RandomAccessFile cobaltdbColumnsCatalog = new RandomAccessFile(
             App.getTBLFilePath(AppFileHandler.columns_table), "r");
-           int root_page_number = AppFileHandler.GetRootPageNum(davisbaseColumnsCatalog);
+           int root_page_number = AppFileHandler.GetRootPageNum(cobaltdbColumnsCatalog);
   
            column_data = new ArrayList<>();
            column_name_attributes = new ArrayList<>();
            column_names = new ArrayList<>();
-           BPlusTree bPlusOneTree = new BPlusTree(davisbaseColumnsCatalog, root_page_number,TableName);
+           BPlusTree bPlusOneTree = new BPlusTree(cobaltdbColumnsCatalog, root_page_number,TableName);
 
            for (Integer pageNo : bPlusOneTree.GetAllLeaves()) {
            
-             Page page = new Page(davisbaseColumnsCatalog, pageNo);
+             Page page = new Page(cobaltdbColumnsCatalog, pageNo);
               
               for (TableRecord record : page.GetPageRecords()) {
                   
@@ -195,7 +195,7 @@ public void UpdateMetaData()
               }
            }
   
-           davisbaseColumnsCatalog.close();
+           cobaltdbColumnsCatalog.close();
         } catch (Exception e) {
            System.out.println("! Error while getting column data for " + TableName);
         }

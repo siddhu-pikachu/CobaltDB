@@ -363,7 +363,6 @@ public class Page {
 		incoming_insert = node;
 		incoming_insert.left_page_number = left_pgno;
 		List<Integer> rowIds = new ArrayList<>();
-		List<String> ixValues = get_index_vals();
 		if (get_index_vals().contains(node.index_val.field_value)) {
 			left_pgno = IdxValuePointer.get(node.index_val.field_value).left_pgno;
 			incoming_insert.left_page_number = left_pgno;
@@ -498,8 +497,6 @@ public class Page {
 
 				if (pg_type == PageType.INTERIORINDEX)
 					left_pgno = binFile.readInt();
-
-				short payload = binFile.readShort(); // payload
 
 				noOfRowIds = binFile.readByte();
 				dataType = binFile.readByte();

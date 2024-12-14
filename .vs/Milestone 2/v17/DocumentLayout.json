@@ -1,0 +1,241 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\Record.java||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main\\java\\dbms\\Record.java||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\Table.java||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main\\java\\dbms\\Table.java||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\BPlusTree.java||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main\\java\\dbms\\BPlusTree.java||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\App.java||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main\\java\\dbms\\App.java||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\Index.java||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main\\java\\dbms\\Index.java||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\MetadataManager.java||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main\\java\\dbms\\MetadataManager.java||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\org\\example\\Main.java||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main\\java\\org\\example\\Main.java||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\TextType.java||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main\\java\\dbms\\TextType.java||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\Page.java||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main\\java\\dbms\\Page.java||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\Node.java||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main\\java\\dbms\\Node.java||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\FileStorage.java||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main\\java\\dbms\\FileStorage.java||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\DataType.java||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main\\java\\dbms\\DataType.java||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\ColumnType.java||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main\\java\\dbms\\ColumnType.java||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MetadataManager.java",
+              "DocumentMoniker": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\MetadataManager.java",
+              "RelativeDocumentMoniker": "src\\main\\java\\dbms\\MetadataManager.java",
+              "ToolTip": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\MetadataManager.java",
+              "RelativeToolTip": "src\\main\\java\\dbms\\MetadataManager.java",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAQwDMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-12-13T07:41:52.022Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Index.java",
+              "DocumentMoniker": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\Index.java",
+              "RelativeDocumentMoniker": "src\\main\\java\\dbms\\Index.java",
+              "ToolTip": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\Index.java",
+              "RelativeToolTip": "src\\main\\java\\dbms\\Index.java",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-12-13T07:34:09.805Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "App.java",
+              "DocumentMoniker": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\App.java",
+              "RelativeDocumentMoniker": "src\\main\\java\\dbms\\App.java",
+              "ToolTip": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\App.java",
+              "RelativeToolTip": "src\\main\\java\\dbms\\App.java",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-12-13T06:29:52.349Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BPlusTree.java",
+              "DocumentMoniker": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\BPlusTree.java",
+              "RelativeDocumentMoniker": "src\\main\\java\\dbms\\BPlusTree.java",
+              "ToolTip": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\BPlusTree.java",
+              "RelativeToolTip": "src\\main\\java\\dbms\\BPlusTree.java",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAG8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-12-13T06:49:22.441Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Table.java",
+              "DocumentMoniker": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\Table.java",
+              "RelativeDocumentMoniker": "src\\main\\java\\dbms\\Table.java",
+              "ToolTip": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\Table.java",
+              "RelativeToolTip": "src\\main\\java\\dbms\\Table.java",
+              "ViewState": "AgIAACsAAAAAAAAAAAAswEMAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-12-13T06:55:58.19Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Main.java",
+              "DocumentMoniker": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\org\\example\\Main.java",
+              "RelativeDocumentMoniker": "src\\main\\java\\org\\example\\Main.java",
+              "ToolTip": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\org\\example\\Main.java",
+              "RelativeToolTip": "src\\main\\java\\org\\example\\Main.java",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-12-13T07:11:41.419Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "TextType.java",
+              "DocumentMoniker": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\TextType.java",
+              "RelativeDocumentMoniker": "src\\main\\java\\dbms\\TextType.java",
+              "ToolTip": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\TextType.java",
+              "RelativeToolTip": "src\\main\\java\\dbms\\TextType.java",
+              "ViewState": "AgIAACIAAAAAAAAAAAAQwDsAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-12-13T06:56:55.575Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Record.java",
+              "DocumentMoniker": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\Record.java",
+              "RelativeDocumentMoniker": "src\\main\\java\\dbms\\Record.java",
+              "ToolTip": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\Record.java",
+              "RelativeToolTip": "src\\main\\java\\dbms\\Record.java",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABRAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-12-13T06:54:43.746Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Page.java",
+              "DocumentMoniker": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\Page.java",
+              "RelativeDocumentMoniker": "src\\main\\java\\dbms\\Page.java",
+              "ToolTip": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\Page.java",
+              "RelativeToolTip": "src\\main\\java\\dbms\\Page.java",
+              "ViewState": "AgIAAIwAAAAAAAAAAAAQwLMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-12-13T06:53:53.04Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Node.java",
+              "DocumentMoniker": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\Node.java",
+              "RelativeDocumentMoniker": "src\\main\\java\\dbms\\Node.java",
+              "ToolTip": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\Node.java",
+              "RelativeToolTip": "src\\main\\java\\dbms\\Node.java",
+              "ViewState": "AgIAADsAAAAAAAAAAAAQwGIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-12-13T06:53:13.918Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "FileStorage.java",
+              "DocumentMoniker": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\FileStorage.java",
+              "RelativeDocumentMoniker": "src\\main\\java\\dbms\\FileStorage.java",
+              "ToolTip": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\FileStorage.java",
+              "RelativeToolTip": "src\\main\\java\\dbms\\FileStorage.java",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAQwEUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-12-13T06:52:24.763Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "DataType.java",
+              "DocumentMoniker": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\DataType.java",
+              "RelativeDocumentMoniker": "src\\main\\java\\dbms\\DataType.java",
+              "ToolTip": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\DataType.java",
+              "RelativeToolTip": "src\\main\\java\\dbms\\DataType.java",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAUwBwAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-12-13T06:51:36.232Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ColumnType.java",
+              "DocumentMoniker": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\ColumnType.java",
+              "RelativeDocumentMoniker": "src\\main\\java\\dbms\\ColumnType.java",
+              "ToolTip": "D:\\SXY240011\\UTD Sem 1\\Database Design\\Milestone 2\\src\\main\\java\\dbms\\ColumnType.java",
+              "RelativeToolTip": "src\\main\\java\\dbms\\ColumnType.java",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwDcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-12-13T06:50:46.423Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

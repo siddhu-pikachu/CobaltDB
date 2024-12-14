@@ -74,35 +74,21 @@ public class App {
 		out.println("SUPPORTED COMMANDS\n");
 		out.println("All commands below are case insensitive\n");
 
-		out.println("SHOW TABLES;");
-		out.println("\tDisplay the names of all tables.\n");
+		out.println("Display all tables: SHOW TABLES;\n");
 
-		out.println("CREATE TABLE <TableName> (<column_name> <data_type> <not_null> <unique>);");
-		out.println("\tCreates a table with the given columns.\n");
+		out.println("Creates a table: CREATE TABLE <TableName> (<column_name> <data_type> <not_null> <unique>);\n");
+		
+		out.println("Insert a new record: INSERT INTO <TableName> (<column_list>) VALUES (<values_list>);\n");
 
-		out.println("DROP TABLE <TableName>;");
-		out.println("\tRemove table data (i.e. all records) and its schema.\n");
+		out.println("Deletes a table: DROP TABLE <TableName>;\n");
 
-		out.println("UPDATE <TableName> SET <column_name> = <value> [WHERE <condition>];");
-		out.println("\tModify records data whose optional <condition>");
-		out.println("\tis <column_name> = <value>.\n");
+		out.println("Updates records: UPDATE <TableName> SET <column_name> = <value> [WHERE <condition>];\n");
 
-		out.println("INSERT INTO <TableName> (<column_list>) VALUES (<values_list>);");
-		out.println("\tInserts a new record into the table with the given values for the given columns.\n");
+		out.println("Display records: SELECT <column_list> FROM <TableName> [WHERE <condition>];\n");
 
-		out.println("SELECT <column_list> FROM <TableName> [WHERE <condition>];");
-		out.println("\tDisplay table records whose optional <condition>");
-		out.println("\tis <column_name> = <value>.\n");
+		out.println("Delete records: DELETE FROM TABLE <TableName> [WHERE <condition>];\n");
 
-		out.println("DELETE FROM TABLE <TableName> [WHERE <condition>];");
-		out.println("\tDelete table records whose optional <condition>");
-		out.println("\tis <column_name> = <value>.\n");
-
-		out.println("CREATE INDEX ON <TableName> (col_name)");
-		out.println("\tCreates Index on the given col_name (only single column supported)");
-
-		out.println("VERSION;");
-		out.println("\tDisplay the program version.\n");
+		out.println("Creates index: CREATE INDEX ON <TableName> (col_name)\n");
 
 		out.println("HELP;");
 		out.println("\tDisplay this help information.\n");
@@ -129,10 +115,10 @@ public class App {
 		switch (commandTokens.get(0)) {
 		case "show":
 			if (commandTokens.get(1).equals("tables"))
-				parseUserCommand("select * from davisbase_tables");
+				parseUserCommand("select * from cobaltdb_tables");
 			else if (commandTokens.get(1).equals("rowid")) {
 				AppFileHandler.showing_rowid = true;
-				System.out.println("* Table will now display the contents of RowId.");
+				System.out.println("RowId contents.");
 			} else
 				System.out.println("Unknown command: \"" + userCommand + "\"");
 			break;
@@ -166,54 +152,10 @@ public class App {
 		case "quit":
 			isExit = true;
 			break;
-		case "test":
-			test();
-			break;
 		default:
-			System.out.println("! I didn't understand the command: \"" + userCommand + "\"");
+			System.out.println("! Incorrect command: \"" + userCommand + "\"");
 			break;
 		}
-	}
-
-	public static void test() {
-		Scanner scan = new Scanner(System.in);
-		System.out.println("------Creating Table with name test and columns(id, name)------");
-		parseUserCommand("create table test (unique_id int, name text)");
-		System.out.println("------Creating Index on Column Id------");
-		// scan.nextLine();
-		parseUserCommand("create index on test (name)");
-		// scan.nextLine();
-		for (int i = 1; i < 10; i++) {
-
-			parseUserCommand("insert into test (unique_id, name) values (" + (i) + ", " + i + "'arun' )");
-
-		}
-		System.out.println("------Showing Tables------");
-		// scan.nextLine();
-		parseUserCommand("show tables");
-		System.out.println("------Testing SELECT query without where------");
-		// scan.nextLine();
-		parseUserCommand("select * from test");
-		System.out.println("------Testing SELECT query with where------");
-		parseUserCommand("select * from test where unique_id=2");
-		System.out.println("------Testing UPDATE query with where------");
-		// scan.nextLine();
-		parseUserCommand("update test set name = dhairya where unique_id=3");
-		// scan.nextLine();
-		parseUserCommand("select * from test");
-		// scan.nextLine();
-		System.out.println("------Deleting row from table with unique_id=4------");
-		parseUserCommand("delete from table test where unique_id=4");
-		System.out.println("------Showing all rows in table test------");
-		parseUserCommand("select * from test");
-		System.out.println("------Dropping the table test------");
-		parseUserCommand("drop table test");
-		System.out.println("------showing tables in database------");
-		parseUserCommand("show tables");
-		System.out.println("------Test Completed------");
-		parseUserCommand("exit");
-		scan.close();
-
 	}
 
 	public static void parse_create_index(String createIndexString) {
@@ -279,8 +221,6 @@ public class App {
 	}
 
 	public static void DropTable(String dropTableString) {
-		System.out.println("STUB: This is the DropTable method.");
-		System.out.println("\tParsing the string:\"" + dropTableString + "\"");
 
 		String[] tokens = dropTableString.split(" ");
 		if (!(tokens[0].trim().equalsIgnoreCase("DROP") && tokens[1].trim().equalsIgnoreCase("TABLE"))) {
@@ -649,20 +589,20 @@ public class App {
 			}
 
 			// update sys file
-			RandomAccessFile davisbase_catalog_of_tables = new RandomAccessFile(
+			RandomAccessFile cobaltdb_catalog_of_tables = new RandomAccessFile(
 					getTBLFilePath(AppFileHandler.tables_table), "rw");
-			MetaDataOfTable davisbaseMetaDataOfTable = new MetaDataOfTable(AppFileHandler.tables_table);
+			MetaDataOfTable cobaltdbMetaDataOfTable = new MetaDataOfTable(AppFileHandler.tables_table);
 
-			int pageNo = BPlusTree.get_pagenum_for_insertion(davisbase_catalog_of_tables,
-					davisbaseMetaDataOfTable.root_page_number);
+			int pageNo = BPlusTree.get_pagenum_for_insertion(cobaltdb_catalog_of_tables,
+					cobaltdbMetaDataOfTable.root_page_number);
 
-			Page page = new Page(davisbase_catalog_of_tables, pageNo);
+			Page page = new Page(cobaltdb_catalog_of_tables, pageNo);
 
 			int rowNo = page.add_table_row(AppFileHandler.tables_table,
 					Arrays.asList(new Attribute[] { new Attribute(DataType.TEXT, TableName), // AppFileHandler.tablesTable->test
 							new Attribute(DataType.INT, "0"), new Attribute(DataType.SMALLINT, "0"),
 							new Attribute(DataType.SMALLINT, "0") }));
-			davisbase_catalog_of_tables.close();
+			cobaltdb_catalog_of_tables.close();
 
 			if (rowNo == -1) {
 				System.out.println("table Name conflict");
@@ -672,19 +612,19 @@ public class App {
 			Page.add_new_pg(table_file, PageType.LEAF, -1, -1);
 			table_file.close();
 
-			RandomAccessFile davisbaseColumnsCatalog = new RandomAccessFile(
+			RandomAccessFile cobaltdbColumnsCatalog = new RandomAccessFile(
 					getTBLFilePath(AppFileHandler.columns_table), "rw");
-			MetaDataOfTable davisbaseColumnsMetaData = new MetaDataOfTable(AppFileHandler.columns_table);
-			pageNo = BPlusTree.get_pagenum_for_insertion(davisbaseColumnsCatalog,
-					davisbaseColumnsMetaData.root_page_number);
+			MetaDataOfTable cobaltdbColumnsMetaData = new MetaDataOfTable(AppFileHandler.columns_table);
+			pageNo = BPlusTree.get_pagenum_for_insertion(cobaltdbColumnsCatalog,
+					cobaltdbColumnsMetaData.root_page_number);
 
-			Page page1 = new Page(davisbaseColumnsCatalog, pageNo);
+			Page page1 = new Page(cobaltdbColumnsCatalog, pageNo);
 
 			for (ColumnInformation column : lstcolumnInformation) {
 				page1.AddNewColumn(column);
 			}
 
-			davisbaseColumnsCatalog.close();
+			cobaltdbColumnsCatalog.close();
 
 			System.out.println("* Table created *");
 
