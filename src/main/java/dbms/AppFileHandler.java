@@ -2,15 +2,10 @@ package dbms;
 
 import java.io.RandomAccessFile;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Scanner;
-import java.util.SortedMap;
 
 import java.util.ArrayList;
-import java.lang.Math.*;
 import java.util.Arrays;
 import static java.lang.System.out;
 import java.util.List;
@@ -18,8 +13,8 @@ import java.util.Map;
 
 public class AppFileHandler {
 
-	public static String columns_table = "davisbase_columns";
-	public static String tables_table = "davisbase_tables";
+	public static String columns_table = "cobaltdb_columns";
+	public static String tables_table = "cobaltdb_tables";
 	public static boolean showing_rowid = false;
 	public static boolean IsDataInitialized = false;
 
@@ -184,7 +179,7 @@ public class AppFileHandler {
 			}
 			return rootpage;
 		} catch (Exception e) {
-			out.println("root page no not found!! ");
+			out.println("root page not found!! ");
 			out.println(e);
 		}
 		return -1;
@@ -212,10 +207,10 @@ public class AppFileHandler {
 
 			int current_page_number = 0;
 
-			RandomAccessFile davisbase_catalog_of_tables = new RandomAccessFile(
+			RandomAccessFile cobaltdb_catalog_of_tables = new RandomAccessFile(
 					App.getTBLFilePath(tables_table), "rw");
-			Page.add_new_pg(davisbase_catalog_of_tables, PageType.LEAF, -1, -1);
-			Page page = new Page(davisbase_catalog_of_tables, current_page_number);
+			Page.add_new_pg(cobaltdb_catalog_of_tables, PageType.LEAF, -1, -1);
+			Page page = new Page(cobaltdb_catalog_of_tables, current_page_number);
 
 			page.add_table_row(tables_table,
 					Arrays.asList(new Attribute[] { new Attribute(DataType.TEXT, AppFileHandler.tables_table),
@@ -227,7 +222,7 @@ public class AppFileHandler {
 							new Attribute(DataType.INT, "11"), new Attribute(DataType.SMALLINT, "0"),
 							new Attribute(DataType.SMALLINT, "2") }));
 
-			davisbase_catalog_of_tables.close();
+			cobaltdb_catalog_of_tables.close();
 		} catch (Exception e) {
 			out.println("Error creating database_tables file");
 			out.println(e);
@@ -236,10 +231,10 @@ public class AppFileHandler {
 
 		
 		try {
-			RandomAccessFile davisbaseColumnsCatalog = new RandomAccessFile(
+			RandomAccessFile cobaltdbColumnsCatalog = new RandomAccessFile(
 					App.getTBLFilePath(columns_table), "rw");
-			Page.add_new_pg(davisbaseColumnsCatalog, PageType.LEAF, -1, -1);
-			Page page = new Page(davisbaseColumnsCatalog, 0);
+			Page.add_new_pg(cobaltdbColumnsCatalog, PageType.LEAF, -1, -1);
+			Page page = new Page(cobaltdbColumnsCatalog, 0);
 
 			short ordinal_position = 1;
 
@@ -272,7 +267,7 @@ public class AppFileHandler {
 			page.AddNewColumn(new ColumnInformation(columns_table, DataType.SMALLINT, "is_unique", false, false,
 					ordinal_position++));
 
-			davisbaseColumnsCatalog.close();
+			cobaltdbColumnsCatalog.close();
 			IsDataInitialized = true;
 		} catch (Exception e) {
 			out.println("Error creating database_columns file");

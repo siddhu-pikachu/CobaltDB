@@ -1,80 +1,55 @@
 # CobaltDB - A Simple Database Management System
 
-## Current Implementation Status
 ----
-by - Siddhu Neehal Rapeti
+#### Team Members
+   - Siddhu Neehal Rapeti
    - Yukta Piyush Shah
    - Sakshi Yawale
    - Gagandeep Singh
+   - Himanshi Rohera
 
 #### Query Processing
 - Basic query handling skeleton in `App.java`
-- Supports basic commands: `.file`, `create`, `show`, `insert`, `delete`, `select`, `update`
+- Supports basic commands: `create`, `show`, `insert`, `delete`, `select`, `update`, `drop`
 - Command-line interface with a simple prompt system
 
-#### Data Storage Layer
-- `Record.java`: Record management system
-  - Currently hardcoded for employee table structure
-  - Supports basic CRUD operations
-  - Uses ByteBuffer for serialization/deserialization
-
-- `Page.java`: Page-level operations
-  - Fixed page size of 512 bytes
-  - Handles record storage and retrieval
-  - Manages page headers and record offsets
-  - Implements page splitting when full
-
 #### Table Management
-- `Table.java`: Table operations
-  - Currently specialized for employee table
-  - Handles CSV file processing
-  - Manages record insertion through B+ tree
+- `InternalTableRecord.java`: Table operations
+  - Models Internal Node Records: Represents a record in a B+ tree's internal node with a row_id (key) and a pointer to the left child page.
+  - Supports Tree Structure: Links keys to subtrees, aiding in navigation within the B+ tree.
+  - Minimal Implementation: Simple constructor initializes the row_id and LeftChildPgnum attributes without additional methods.
+
+- `TableRecord.java`: Table operations
+  - Encapsulates Table Record Data: It represents a single record in a table, storing its row ID, column data types, record    content, and positional metadata like page offsets.
+  - Parses Attributes Dynamically: The setAttributes() method splits the record_content into individual fields based on column data types, creating a list of Attribute objects.
+  - Manages Byte Conversions: It uses utility methods to convert raw byte arrays to objects and back, enabling efficient serialization and deserialization of the record data.
 
 #### Data Types
 - `DataType.java`: Custom datatype implementation
   - Supports standard SQL types (INT, SMALLINT, etc.)
   - Special handling for TEXT type with variable lengths (0-115 characters)
-  - Implements DavisBase type codes (0x00 - 0x0C+)
+  - Implements cobaltdb type codes (0x00 - 0x0C+)
 
 #### B+ Tree Implementation
-- `Node.java`: Base interface for tree nodes
+- `BPlusTree.java`: Base interface for tree nodes
   - Defines common node operations
   - Inherited by LeafNode and InternalNode
 
-- `BPlusTree.java`: Core indexing structure
+- `Page.java`: Core indexing structure
   - Dynamic page management
   - Handles record insertion
   - Implements page splitting
   - Maintains tree balance
 
 #### Metadata Management
-- `FileStorage.java`: Basic metadata storage
+- `AppFileHandler.java`: Basic metadata storage
   - Initial implementation of file handling
-  - Needs significant updates to meet DavisBase specifications
+  - Needs significant updates to meet cobaltdb specifications
 ---- 
-### To-Do List
-1. Generalize Record class to handle any table structure
-2. Implement proper metadata storage as per DavisBase specifications
-3. Add support for index files
-4. Implement remaining SQL commands
-5. Add proper error handling and validation
-6. Implement transaction support
-7. Add support for data constraints
-8. Improve CSV processing
 
 ### Technical Details
 - Page Size: 512 bytes
-- Data Types: As per DavisBase specification
+- Data Types: As per cobaltdb specification
 - File Format: .tbl for tables, .ndx for indexes (planned)
 - B+ Tree: Order 4 implementation
 
-## Usage
-Currently supports:
-```sql
-.file filename.csv
-create table tablename (columns)
--- Other commands in development
-```
-
-## Note
-This is a work in progress implementation following the DavisBase specifications. Many features are currently hardcoded and need to be generalized for proper database functionality.
